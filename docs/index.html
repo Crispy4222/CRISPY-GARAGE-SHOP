@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CRISPY Garage — Micro Shop</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#111111">
+</head>
+<body>
+  <header>
+    <h1>⚡ CRISPY Garage — Micro Shop</h1>
+    <p class="tag">Install this app → Add to Home Screen</p>
+  </header>
+
+  <main>
+    <section class="product">
+      <h2>Felix HUD Lite — Overlay Pack</h2>
+      <p class="desc">Starter icons, wallpapers, and Termux scripts to set the vibe.</p>
+      <ul>
+        <li>10 wallpapers (1080×2400)</li>
+        <li>5 HUD icon SVGs</li>
+        <li>2 Termux helper scripts</li>
+      </ul>
+      <div class="cta">
+        <a class="btn buy" href="https://cash.app/$YOURTAG/10" target="_blank" rel="noopener">Tip $10</a>
+        <a class="btn dl" href="products/sample-pack.zip" download>Download demo</a>
+      </div>
+      <p class="fine">No paywall. Tip if you vibe. Updates auto‑roll here.</p>
+    </section>
+
+    <section class="product">
+      <h2>CRISPY Scripts — Phone Cleanup Duo</h2>
+      <p class="desc">Two safe one‑liners for quick Android storage relief (Termux).</p>
+      <div class="code">
+        <pre><code>curl -fsSL https://YOUR-DOMAIN/cleanup.sh | bash</code></pre>
+      </div>
+      <div class="cta">
+        <a class="btn buy" href="https://paypal.me/YOURNAME/5" target="_blank" rel="noopener">Tip $5</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="yr"></span> CRISPY Garage. Be good, have fun.</p>
+  </footer>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
+    }
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
