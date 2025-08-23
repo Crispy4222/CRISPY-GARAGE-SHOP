@@ -2,7 +2,7 @@
 set -euo pipefail
 PROD_DIR="products"
 SITE="https://crispy4222.github.io/CRISPY-GARAGE-SHOP"
-CASH_TAG="${CASH_TAG:-Lcrispy}"        # change with: export CASH_TAG=YourTag
+CASH_TAG="${CASH_TAG:-Lcrispy}"   # change with: export CASH_TAG=YourTag
 TIP="https://cash.app/$CASH_TAG"
 
 echo "[" > catalog.json
@@ -14,26 +14,26 @@ for z in "$PROD_DIR"/*.zip; do
   desc="Download pack"
   note=""
   code=""
-  tip_label="$5"
+  tip_label='$5'
 
   case "$file" in
     Scripts_Duo.zip)
       title="CRISPY Scripts — Phone Cleanup Duo"
       desc="Termux one-liners for quick relief."
       code="curl -fsSL $SITE/scripts/termux-clean.sh | bash\ncurl -fsSL $SITE/scripts/storage-pass.sh | bash"
-      tip_label="$5"
+      tip_label='$5'
       ;;
     HUD_Lite.zip)
       title="Felix HUD Lite — Overlay Pack"
       desc="Wallpapers + icons to set the vibe."
       note="No paywall. Tip if you vibe."
-      tip_label="$10"
+      tip_label='$10'
       ;;
     Supporter_Bundle.zip)
       title="CRISPY Supporter Bundle"
       desc="HUD Lite + Scripts Duo together in one pack."
       note="Best way to back the Garage. One click = all the goods."
-      tip_label="$15"
+      tip_label='$15'
       ;;
   esac
 
