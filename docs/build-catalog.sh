@@ -14,7 +14,7 @@ for z in "$PROD_DIR"/*.zip; do
   desc="Download pack"
   note=""
   code=""
-  tip_label='$5'
+  tip_label='$5'   # keep as literal string
 
   case "$file" in
     Scripts_Duo.zip)
@@ -38,16 +38,24 @@ for z in "$PROD_DIR"/*.zip; do
   esac
 
   [ $first -eq 1 ] && first=0 || echo "," >> catalog.json
+
   jq -n \
-    --arg title "$title" --arg desc "$desc" --arg zip "$file" \
-    --arg tip "$TIP" --arg tip_label "$tip_label" \
-    --arg code "$code" --arg note "$note" \
+    --arg title "$title" \
+    --arg desc "$desc" \
+    --arg zip "$file" \
+    --arg tip "$TIP" \
+    --arg tip_label "$tip_label" \
+    --arg code "$code" \
+    --arg note "$note" \
     '{
-      title:$title, desc:$desc, zip:$zip,
-      tip:$tip, tip_label:$tip_label,
-      code: ( ($code|length) > 0 ? $code : null ),
-      note: ( ($note|length) > 0 ? $note : null )
-    }' >> catalog.json
+       title:$title,
+       desc:$desc,
+       zip:$zip,
+       tip:$tip,
+       tip_label:$tip_label,
+       code: ($code | select(length>0)),
+       note: ($note | select(length>0))
+     }' >> catalog.json
 done
 echo "]" >> catalog.json
 echo "[✓] catalog.json updated."
