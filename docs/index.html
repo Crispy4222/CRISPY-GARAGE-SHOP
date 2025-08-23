@@ -8,11 +8,14 @@
   <link rel="stylesheet" href="style.css">
   <meta name="theme-color" content="#111111">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <script>const m=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone; if(m) document.getElementById("installed").style.display="block";</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>const m=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone; if(m) document.getElementById("installed").style.display="block";</script>
   <script>window.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('pre code').forEach(el=>hljs.highlightElement(el));});</script>
 </head>
 <body>
   <header>
+  <p class="fine" id="installed" style="display:none;opacity:.7">App installed ✓</p>
     <h1>⚡ CRISPY Garage — Micro Shop</h1>
     <p class="tag">Install this app → Add to Home Screen</p>
   </header>
@@ -55,7 +58,9 @@
       window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
     }
     document.getElementById('yr').textContent = new Date().getFullYear();
+  <script>const m=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone; if(m) document.getElementById("installed").style.display="block";</script>
   </script>
-  <script src="app.js"></script>
+  <script>const m=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone; if(m) document.getElementById("installed").style.display="block";</script>
+  <script src="app.js?v=1755938156"></script>
 </body>
 </html>
