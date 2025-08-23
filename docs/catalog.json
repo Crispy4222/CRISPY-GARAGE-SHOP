@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Felix HUD Lite — Overlay Pack",
+    "desc": "Wallpapers + icons to set the vibe.",
+    "zip": "HUD_Lite.zip",
+    "tip": "https://cash.app/$Lcrispy",
+    "tip_label": "$10",
+    "note": "No paywall. Tip if you vibe."
+  },
+  {
+    "title": "CRISPY Scripts — Phone Cleanup Duo",
+    "desc": "Termux one-liners for quick relief.",
+    "code": "curl -fsSL https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/termux-clean.sh | bash\ncurl -fsSL https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/storage-pass.sh | bash",
+    "zip": "Scripts_Duo.zip",
+    "tip": "https://cash.app/$Lcrispy",
+    "tip_label": "$5"
+  }
+]
