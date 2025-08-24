@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8"><title>Phoenix Bus</title>
+<link rel="stylesheet" href="style.css">
+<main>
+  <h1>Phoenix Bus</h1>
+  <pre id="out">(loading…)</pre>
+</main>
+<script>
+const RAW = (new URLSearchParams(location.search).get('raw')) || localStorage.getItem('PHX_BUS');
+if(!RAW){ document.getElementById('out').textContent="Set ?raw=<gist raw url> once."; }
+else {
+  localStorage.setItem('PHX_BUS', RAW);
+  async function tick(){
+    try{
+      const r = await fetch(RAW, {cache:'no-store'});
+      const j = await r.json();
+      const last = j.say.slice(-8).map(s=>`${s.t}  ${s.msg}`).join('\n');
+      document.getElementById('out').textContent = `ts: ${j.ts}\n\n${last}`;
+    }catch(e){ document.getElementById('out').textContent = 'error: '+e; }
+    setTimeout(tick, 5000);
+  }
+  tick();
+}
+</script>
