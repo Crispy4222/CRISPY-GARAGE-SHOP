@@ -112,5 +112,6 @@ function copyCode(btn){
 } 
 </script>
 <script>/* CRISPY_FORCE_UPDATE */(function(){    const BUILD='1755943525'; var t=document.getElementById('buildTag'); if(t) t.textContent='Build '+BUILD;     async function forceUpdate(){      try{ if('serviceWorker' in navigator){const r=await navigator.serviceWorker.getRegistrations(); await Promise.all(r.map(x=>x.unregister()));}            if(window.caches&&caches.keys){const k=await caches.keys(); await Promise.all(k.map(x=>caches.delete(x)));}       }catch(e){} location.href='refresh.html?v='+Date.now(); }     var b=document.getElementById('forceUpdateBtn'); if(b) b.onclick=forceUpdate;   })();</script>
+<script>navigator.serviceWorker </body></body> navigator.serviceWorker.register('sw.js')</script>
 </body>
 </html>
