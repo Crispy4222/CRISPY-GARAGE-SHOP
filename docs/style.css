@@ -18,3 +18,4 @@ footer{padding:20px 16px;text-align:center;opacity:.7;font-size:12px}
 .brand{display:flex;align-items:center;gap:12px;margin:8px 0}
 .brand img{height:56px;display:block}
 .brand .tag{font-size:14px;opacity:.8}
+body{background:#111 url("img/legacy.jpg") center/cover fixed no-repeat;color:#eee}
