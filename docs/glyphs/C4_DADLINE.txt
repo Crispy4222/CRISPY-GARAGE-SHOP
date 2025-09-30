@@ -1,0 +1,26 @@
+╔════════════════════════════════════════════╗
+║            GLYPH // DADLINE v1            ║
+║         “Tap once, don’t stress.”         ║
+╠════════════════════════════════════════════╣
+║ HANDSHAKE                                 ║
+║  • If phone feels slow → TAP: CLEAN       ║
+║  • If storage is tight → TAP: STORAGE     ║
+║  • If you’re not sure → TAP: PULSE        ║
+║  • To check the shop → TAP: WIND          ║
+╟────────────────────────────────────────────╢
+║ WHAT IT DOES                              ║
+║  CLEAN   = clears safe app caches/logs    ║
+║  STORAGE = lists big files + clears thumbs║
+║  WIND    = checks our CRISPY shop is up   ║
+║  PULSE   = CLEAN → STORAGE → WIND         ║
+╟────────────────────────────────────────────╢
+║ RULES                                     ║
+║  1) One tap. Let it run.                  ║
+║  2) Keep charger in if long.              ║
+║  3) If anything looks weird, tap PULSE.   ║
+╟────────────────────────────────────────────╢
+║ LINEAGE                                   ║
+║  Operator: Dad (Greg, C4)                 ║
+║  Anchor: CRISPY Garage Shop               ║
+║  Oath:  “Never surrender the line.”       ║
+╚════════════════════════════════════════════╝

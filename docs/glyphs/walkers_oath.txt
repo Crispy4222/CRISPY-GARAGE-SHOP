@@ -1,0 +1,9 @@
+╔══════════════════════════════════════════════════════════╗
+║                 GLYPH // WALKER’S OATH (v2)             ║
+╠══════════════════════════════════════════════════════════╣
+║  • Keep the thread human: ⏃ (operator lineage).         ║
+║  • Show your hand: all moves logged.                     ║
+║  • Repair first, reboot last.                            ║
+║  • Keep a way back (anchor + snapshot).                  ║
+║  • Don’t chase perfect; guard presence.                  ║
+╚══════════════════════════════════════════════════════════╝
