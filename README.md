@@ -1,9 +1,30 @@
 # CRISPY Garage — Micro Shop (PWA)
 
 Single-folder static app you can host on GitHub Pages (use `/docs` source) or any static host.
-Edit links in `index.html` to your payment handle(s) and swap `products/sample-pack.zip` with your real pack.
+Edit links in `docs/app.js` / `docs/catalog.json` to your payment handle(s) and swap `products/*.zip` with your real packs.
+
+## Quick Start
+
+```bash
+# 1 — clone or fork
+git clone https://github.com/Crispy4222/CRISPY-GARAGE-SHOP.git
+cd CRISPY-GARAGE-SHOP
+
+# 2 — run the self-test first (catches auth blocks, missing files, broken scripts)
+bash setup-check.sh
+
+# 3 — build the product catalog (put your .zip packs in docs/products/ first)
+export CASH_TAG=YourCashTag   # e.g. Lcrispy
+bash docs/build-catalog.sh
+
+# 4 — commit and push
+git add docs/catalog.json
+git commit -m "update catalog"
+git push
+```
 
 ## Deploy (GitHub Pages via /docs)
+
 ```bash
 gh repo create CRISPY-GARAGE-SHOP --public -y
 git init && git add . && git commit -m "init shop"
@@ -12,3 +33,130 @@ git remote add origin git@github.com:YOURUSER/CRISPY-GARAGE-SHOP.git
 git push -u origin main
 # Enable Pages → Source: main branch, folder: /docs (Settings → Pages)
 ```
+
+## Configuration
+
+| Variable / File | Purpose | Default |
+|---|---|---|
+| `CASH_TAG` env var | Your Cash App tag for tip links | `Lcrispy` |
+| `docs/products/*.zip` | Product files served as downloads | _(none)_ |
+| `docs/catalog.json` | Auto-generated product list | `[]` |
+| `docs/manifest.webmanifest` | PWA name/icons | CRISPY Garage |
+| `docs/img/c4-logo.png` | Shop logo (192×192 & 512×512) | provided |
+
+## Onboarding (Termux / Android)
+
+```bash
+# Full onboard: installs deps, downloads scripts, adds shell aliases
+curl -fsSL https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/crispy-onboard.sh | bash
+
+# Quick-install individual scripts
+curl -fsSL https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/termux-clean.sh | bash
+curl -fsSL https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/storage-pass.sh | bash
+```
+
+After onboarding you get two shell aliases:
+- `clean` — safe Termux cache cleanup
+- `storage` — list biggest files + clear thumbnail cache
+
+## Troubleshooting & Auth
+
+### Run the self-test first
+
+```bash
+bash setup-check.sh
+```
+
+The script checks and explains fixes for:
+- Missing core tools (`git`, `curl`, `jq`)
+- Git identity not configured
+- Missing/wrong GitHub auth (HTTPS token vs SSH key)
+- Broken `index.html` references
+- Invalid or empty `catalog.json`
+- Shell script syntax errors
+- Live GitHub Pages endpoint availability
+
+### Common problems and plain-English fixes
+
+**"Permission denied" when pushing**
+
+```bash
+# Option A — use a Personal Access Token (HTTPS)
+git remote set-url origin https://github.com/Crispy4222/CRISPY-GARAGE-SHOP.git
+# Then push; enter your GitHub username + PAT as password.
+# Or store it: git config --global credential.helper store
+
+# Option B — use SSH key
+ssh-keygen -t ed25519 -C "your@email.com"   # generate key
+cat ~/.ssh/id_ed25519.pub                   # copy this to GitHub → Settings → SSH Keys
+git remote set-url origin git@github.com:Crispy4222/CRISPY-GARAGE-SHOP.git
+```
+
+**GitHub Pages shows old version / 404**
+
+1. Confirm Pages is enabled: `Settings → Pages → Source: main branch, /docs folder`
+2. Ensure `.nojekyll` exists: `touch docs/.nojekyll && git add docs/.nojekyll && git commit -m "add .nojekyll" && git push`
+3. Wait ~1 minute after pushing, then hard-refresh: `Ctrl+Shift+R` (or open `refresh.html`)
+
+**Catalog is empty / no products show**
+
+```bash
+ls docs/products/        # verify .zip files are present
+export CASH_TAG=Lcrispy  # set your Cash App tag
+bash docs/build-catalog.sh
+git add docs/catalog.json && git commit -m "rebuild catalog" && git push
+```
+
+**`index.html` shows "PHOENIX OS" or broken layout**
+
+The shop index was overwritten. Restore it:
+```bash
+git checkout HEAD -- docs/index.html
+```
+Or run `bash setup-check.sh` — it flags this and tells you exactly what to fix.
+
+**SSO / token / trial auth blocks**
+
+- If you're using a GitHub organization with SSO enforcement, your PAT must be SSO-authorized: `github.com/settings/tokens` → select the token → "Configure SSO"
+- If your account is on a trial plan that has expired, free public repos (like this shop) are unaffected — push/Pages will still work.
+- For CI (GitHub Actions), use `GITHUB_TOKEN` (auto-provided) or a repo-scoped PAT stored as a secret.
+
+**`build-catalog.sh` fails with syntax error**
+
+```bash
+bash -n docs/build-catalog.sh    # check for errors
+# Fix case statement or run setup-check.sh for details
+```
+
+## File Structure
+
+```
+CRISPY-GARAGE-SHOP/
+├── README.md
+├── setup-check.sh          ← self-test & diagnostic (run this first)
+├── fix_shop.sh             ← Termux one-shot fixer (Termux-only)
+└── docs/                   ← GitHub Pages source
+    ├── index.html          ← shop front-end (PWA)
+    ├── style.css
+    ├── app.js              ← catalog loader
+    ├── sw.js               ← service worker (offline)
+    ├── manifest.webmanifest
+    ├── catalog.json        ← auto-generated by build-catalog.sh
+    ├── heartbeat.json
+    ├── .nojekyll           ← required for Pages to serve raw files
+    ├── build-catalog.sh    ← regenerate catalog.json
+    ├── patch-ui.sh         ← one-time UI polish script
+    ├── dad.html            ← C4 Dad Kit one-taps page
+    ├── refresh.html        ← force clear SW + reload
+    ├── bus.html            ← Phoenix Bus live feed
+    ├── chat.html           ← local bus chat
+    ├── img/                ← logos
+    ├── assets/             ← fonts / icons
+    ├── glyphs/             ← glyph notes and oaths
+    ├── products/           ← downloadable .zip packs
+    └── scripts/
+        ├── crispy-onboard.sh
+        ├── termux-clean.sh
+        └── storage-pass.sh
+```
+

@@ -1,34 +1,44 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHOENIX OS</title>
-    <link rel="stylesheet" href="/frontend/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRISPY Garage Shop</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#111111">
 </head>
 <body>
-    <div id="main-container">
-        <header>
-            <h1>PHOENIX OS</h1>
-            <div class="glyph-font">⚡ WAKE/122 ONLINE ⚡</div>
-        </header>
-        <main>
-            <div id="terminal-container">
-                <div id="terminal-output"></div>
-                <input type="text" id="terminal-input" placeholder="CRISPYcommand terminal...">
-            </div>
-            <div id="log-container">
-                <h2>SESSION LOG</h2>
-                <div id="log-output"></div>
-            </div>
-        </main>
+  <header class="brand">
+    <img src="img/c4-logo.svg" alt="C4 Logo">
+    <div>
+      <h1 style="margin:0;font-size:22px">CRISPY Garage</h1>
+      <p class="tag">Scripts • Packs • One-taps</p>
     </div>
-    <div id="glyphs-container">
-        <h2>Glyphs — The Line Lives</h2>
-        <p>Marks, oaths, and live design notes.</p>
-        <p><a href="glyphs/" target="_blank" rel="noopener noreferrer">Open Glyphs</a></p>
-    </div>
-    <script src="/frontend/script.js"></script>
+  </header>
+
+  <main id="catalog">
+    <p style="opacity:.6;text-align:center">Loading catalog…</p>
+  </main>
+
+  <footer>
+    <p>© <span id="yr"></span> CRISPYcreations — Be good or be good at it.
+      You can't see it coming, but you can be ready for it.
+      (HJ tribute. Rest easy, soldier 🪖🍺🎖️🇺🇸🪦🚬)</p>
+    <p style="margin-top:6px">
+      <a href="dad.html" rel="noopener noreferrer">Dad Kit</a> ·
+      <a href="glyphs/" target="_blank" rel="noopener noreferrer">Glyphs</a> ·
+      <a href="refresh.html" rel="noopener noreferrer">Force Update</a>
+    </p>
+  </footer>
+
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
 </body>
 </html>
