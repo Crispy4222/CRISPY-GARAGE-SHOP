@@ -19,29 +19,38 @@ input{flex:1}
 </main>
 <script>
 const BUS = "http://127.0.0.1:8122";
-const S = (t)=>document.getElementById(t);
+const POLL_MS = 1500;
+const BACKOFF_CAP_MS = 30000;
+const logEl = document.getElementById('log');
+const statusEl = document.getElementById('status');
+const msgEl = document.getElementById('msg');
+let errCount = 0;
 async function tail(){
+  if(document.hidden){ setTimeout(tail, Math.min(POLL_MS * Math.pow(2, errCount), BACKOFF_CAP_MS)); return; }
   try{
     const r = await fetch(BUS+"/tail?n=120",{cache:'no-store'});
     if(!r.ok) throw new Error(r.status);
     const j = await r.json();
-    S('log').textContent = j.lines.join('');
-    S('status').textContent = "connected ✓";
+    logEl.textContent = j.lines.join('');
+    statusEl.textContent = "connected ✓";
+    errCount = 0;
+    setTimeout(tail, POLL_MS);
   }catch(e){
-    S('status').innerHTML = '<span class="err">bus not reachable — tap the Termux shortcut “bus_up”</span>';
-  } finally {
-    setTimeout(tail, 1500);
+    statusEl.innerHTML = '<span class="err">bus not reachable — tap the Termux shortcut "bus_up"</span>';
+    errCount++;
+    setTimeout(tail, Math.min(POLL_MS * Math.pow(2, errCount), BACKOFF_CAP_MS));
   }
 }
 async function send(){
-  const v = S('msg').value.trim(); if(!v) return;
-  S('msg').value = '';
+  const v = msgEl.value.trim(); if(!v) return;
+  msgEl.value = '';
   try{
     const r = await fetch(BUS+'/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({msg:v})});
     if(!r.ok) throw new Error(r.status);
   }catch(e){ alert("send failed: "+e); }
 }
-S('send').onclick = send;
-S('msg').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
+document.getElementById('send').onclick = send;
+msgEl.addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) tail(); });
 tail();
 </script>

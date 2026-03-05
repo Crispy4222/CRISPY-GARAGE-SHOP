@@ -1,11 +1,10 @@
 async function loadCatalog(){
-  const host = location.pathname.replace(/\/index\.html?$/,'');
   const res = await fetch('catalog.json').catch(()=>null);
   if (!res || !res.ok) return;
   const items = await res.json().catch(()=>[]);
   const grid = document.querySelector('#catalog');
   if (!grid || !Array.isArray(items)) return;
-  grid.innerHTML = '';
+  const frag = document.createDocumentFragment();
   for (const it of items){
     const card = document.createElement('section');
     card.className = 'product';
@@ -19,7 +18,9 @@ async function loadCatalog(){
       </div>
       ${it.note ? `<p class="fine">${it.note}</p>`:''}
     `;
-    grid.appendChild(card);
+    frag.appendChild(card);
   }
+  grid.innerHTML = '';
+  grid.appendChild(frag);
 }
 window.addEventListener('DOMContentLoaded', loadCatalog);
