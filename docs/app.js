@@ -1,25 +1,25 @@
 async function loadCatalog(){
   const host = location.pathname.replace(/\/index\.html?$/,'');
-  const res = await fetch('catalog.json').catch(()=>null);
-  if (!res || !res.ok) return;
-  const items = await res.json().catch(()=>[]);
-  const grid = document.querySelector('#catalog');
-  if (!grid || !Array.isArray(items)) return;
-  grid.innerHTML = '';
-  for (const it of items){
-    const card = document.createElement('section');
-    card.className = 'product';
-    card.innerHTML = `
-      <h2>${it.title}</h2>
-      <p class="desc">${it.desc||''}</p>
-      ${it.code ? `<div class="code"><pre><code>${it.code}</code></pre></div>`:''}
+  const catalogResponse = await fetch('catalog.json').catch(()=>null);
+  if (!catalogResponse || !catalogResponse.ok) return;
+  const catalogItems = await catalogResponse.json().catch(()=>[]);
+  const catalogGrid = document.querySelector('#catalog');
+  if (!catalogGrid || !Array.isArray(catalogItems)) return;
+  catalogGrid.innerHTML = '';
+  for (const product of catalogItems){
+    const productCard = document.createElement('section');
+    productCard.className = 'product';
+    productCard.innerHTML = `
+      <h2>${product.title}</h2>
+      <p class="desc">${product.desc||''}</p>
+      ${product.code ? `<div class="code"><pre><code>${product.code}</code></pre></div>`:''}
       <div class="cta">
-        ${it.tip ? `<a class="btn buy" href="${it.tip}" target="_blank" rel="noopener noreferrer">Tip ${it.tip_label||''}</a>`:''}
-        ${it.zip ? `<a class="btn dl" href="products/${it.zip}" download>Download</a>`:''}
+        ${product.tip ? `<a class="btn buy" href="${product.tip}" target="_blank" rel="noopener noreferrer">Tip ${product.tip_label||''}</a>`:''}
+        ${product.zip ? `<a class="btn dl" href="products/${product.zip}" download>Download</a>`:''}
       </div>
-      ${it.note ? `<p class="fine">${it.note}</p>`:''}
+      ${product.note ? `<p class="fine">${product.note}</p>`:''}
     `;
-    grid.appendChild(card);
+    catalogGrid.appendChild(productCard);
   }
 }
 window.addEventListener('DOMContentLoaded', loadCatalog);
