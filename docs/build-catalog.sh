@@ -29,7 +29,6 @@ for z in "$PROD_DIR"/*.zip; do
       note="No paywall. Tip if you vibe."
       tip_label='$10'
       ;;
-    Supporter_Bundle.zip)
     Quick_Guides.zip)
       title="CRISPY Quick Guides (PWYW)";
       desc="Short how-tos for fast wins.";
@@ -37,6 +36,7 @@ for z in "$PROD_DIR"/*.zip; do
       tip_label="$0+";
       ;;
 
+    Supporter_Bundle.zip)
       title="CRISPY Supporter Bundle"
       desc="HUD Lite + Scripts Duo together in one pack."
       note="Best way to back the Garage. One click = all the goods."
