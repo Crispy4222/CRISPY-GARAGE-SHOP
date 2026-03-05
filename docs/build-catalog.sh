@@ -6,17 +6,17 @@ CASH_TAG="${CASH_TAG:-Lcrispy}"   # change with: export CASH_TAG=YourTag
 TIP="https://cash.app/$CASH_TAG"
 
 echo "[" > catalog.json
-first=1
+isFirstEntry=1
 shopt -s nullglob
-for z in "$PROD_DIR"/*.zip; do
-  file="$(basename "$z")"
-  title="$file"
+for zipFilePath in "$PROD_DIR"/*.zip; do
+  zipFileName="$(basename "$zipFilePath")"
+  title="$zipFileName"
   desc="Download pack"
   note=""
   code=""
   tip_label='$5'   # keep as literal string
 
-  case "$file" in
+  case "$zipFileName" in
     Scripts_Duo.zip)
       title="CRISPY Scripts — Phone Cleanup Duo"
       desc="Termux one-liners for quick relief."
@@ -44,12 +44,12 @@ for z in "$PROD_DIR"/*.zip; do
       ;;
   esac
 
-  [ $first -eq 1 ] && first=0 || echo "," >> catalog.json
+  [ $isFirstEntry -eq 1 ] && isFirstEntry=0 || echo "," >> catalog.json
 
   jq -n \
     --arg title "$title" \
     --arg desc "$desc" \
-    --arg zip "$file" \
+    --arg zip "$zipFileName" \
     --arg tip "$TIP" \
     --arg tip_label "$tip_label" \
     --arg code "$code" \

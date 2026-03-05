@@ -1,6 +1,6 @@
-self.addEventListener('install', e=>{
-  e.waitUntil(caches.open('garage-v1').then(c=>c.addAll(['./','./index.html','./manifest.webmanifest'])));
+self.addEventListener('install', installEvent=>{
+  installEvent.waitUntil(caches.open('garage-v1').then(appCache=>appCache.addAll(['./','./index.html','./manifest.webmanifest'])));
 });
-self.addEventListener('fetch', e=>{
-  e.respondWith(caches.match(e.request).then(r=>r || fetch(e.request)));
+self.addEventListener('fetch', fetchEvent=>{
+  fetchEvent.respondWith(caches.match(fetchEvent.request).then(cachedResponse=>cachedResponse || fetch(fetchEvent.request)));
 });

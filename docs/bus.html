@@ -5,17 +5,17 @@
   <pre id="out">(loading…)</pre>
 </main>
 <script>
-const RAW = (new URLSearchParams(location.search).get('raw')) || localStorage.getItem('PHX_BUS');
-if(!RAW){ document.getElementById('out').textContent="Set ?raw=<gist raw url> once."; }
+const gistRawUrl = (new URLSearchParams(location.search).get('raw')) || localStorage.getItem('PHX_BUS');
+if(!gistRawUrl){ document.getElementById('out').textContent="Set ?raw=<gist raw url> once."; }
 else {
-  localStorage.setItem('PHX_BUS', RAW);
+  localStorage.setItem('PHX_BUS', gistRawUrl);
   async function tick(){
     try{
-      const r = await fetch(RAW, {cache:'no-store'});
-      const j = await r.json();
-      const last = j.say.slice(-8).map(s=>`${s.t}  ${s.msg}`).join('\n');
-      document.getElementById('out').textContent = `ts: ${j.ts}\n\n${last}`;
-    }catch(e){ document.getElementById('out').textContent = 'error: '+e; }
+      const fetchResponse = await fetch(gistRawUrl, {cache:'no-store'});
+      const busData = await fetchResponse.json();
+      const recentMessages = busData.say.slice(-8).map(message=>`${message.t}  ${message.msg}`).join('\n');
+      document.getElementById('out').textContent = `ts: ${busData.ts}\n\n${recentMessages}`;
+    }catch(fetchError){ document.getElementById('out').textContent = 'error: '+fetchError; }
     setTimeout(tick, 5000);
   }
   tick();
