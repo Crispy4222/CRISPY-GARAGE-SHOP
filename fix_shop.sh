@@ -15,38 +15,11 @@ echo "[i] Starting CRISPY shop fixer"
 mkdir -p "$SCRIPTS"
 cd "$BASE"
 
-# --- ensure scripts exist ---
-cat > "$SCRIPTS/termux-clean.sh" <<'EOF'
-#!/data/data/com.termux/files/usr/bin/bash
-set -euo pipefail
-echo "[Termux Clean] starting"
-pkg clean || true
-apt-get autoremove -y || true
-[ -d "$HOME/.cache" ] && find "$HOME/.cache" -type f -mtime +7 -print -delete
-command -v pip >/dev/null && pip cache purge || true
-command -v npm >/dev/null && npm cache clean --force || true
-find "$HOME" -type f -name "*.log" -mtime +14 -print -delete 2>/dev/null || true
-echo "[Termux Clean] done"
-EOF
-chmod +x "$SCRIPTS/termux-clean.sh"
-
-cat > "$SCRIPTS/storage-pass.sh" <<'EOF'
-#!/data/data/com.termux/files/usr/bin/bash
-set -Eeuo pipefail
-SD="/sdcard"
-echo "[Storage Pass] Largest items in Downloads:"
-du -ah "$SD/Download" 2>/dev/null | sort -hr | head -n 25
-echo
-if [ -d "$SD/DCIM/.thumbnails" ]; then
-  size=$(du -sh "$SD/DCIM/.thumbnails" | awk '{print $1}')
-  echo "[Thumbnails] $size → clearing files (safe)…"
-  rm -f "$SD/DCIM/.thumbnails/"* 2>/dev/null || true
-else
-  echo "[Thumbnails] none found."
-fi
-echo "[Storage Pass] done."
-EOF
-chmod +x "$SCRIPTS/storage-pass.sh"
+# --- ensure scripts are executable (canonical source lives in docs/scripts/) ---
+for _s in termux-clean.sh storage-pass.sh; do
+  [ -f "$SCRIPTS/$_s" ] || { echo "[!] Missing $SCRIPTS/$_s — is the repo fully checked out?"; exit 1; }
+  chmod +x "$SCRIPTS/$_s"
+done
 
 # --- enable raw serving on Pages ---
 touch "$DOCS/.nojekyll"
