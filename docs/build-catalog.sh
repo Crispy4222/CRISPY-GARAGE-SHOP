@@ -1,68 +1,74 @@
 #!/data/data/com.termux/files/usr/bin/bash
-set -euo pipefail
+set -Eeuo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
+cd "$SCRIPT_DIR"
+
 PROD_DIR="products"
-SITE="https://crispy4222.github.io/CRISPY-GARAGE-SHOP"
-CASH_TAG="${CASH_TAG:-Lcrispy}"   # change with: export CASH_TAG=YourTag
+SITE="${SITE:-https://crispy4222.github.io/CRISPY-GARAGE-SHOP}"
+CASH_TAG="${CASH_TAG:-Lcrispy}"
 TIP="https://cash.app/$CASH_TAG"
 
-echo "[" > catalog.json
-first=1
+command -v jq >/dev/null 2>&1 || {
+  printf 'build-catalog: jq is required\n' >&2
+  exit 1
+}
+
+tmp="$(mktemp "$SCRIPT_DIR/catalog.json.XXXXXX")"
+trap 'rm -f "$tmp" "$tmp.next"' EXIT
+
+jq -n   --arg tip "$TIP"   --arg code "curl -fsSLO $SITE/scripts/termux-clean.sh
+curl -fsSLO $SITE/scripts/storage-pass.sh
+less termux-clean.sh storage-pass.sh"   '[{
+    title:"CRISPY Phone Cleanup Duo",
+    desc:"Two small Termux helpers for reviewing storage use and clearing selected caches.",
+    tip:$tip,
+    tip_label:"$5 suggested",
+    code:$code,
+    note:"Inspect before execution: these helpers remove selected caches, older logs, and Android thumbnail-cache files."
+  }]' > "$tmp"
+
 shopt -s nullglob
-for z in "$PROD_DIR"/*.zip; do
-  file="$(basename "$z")"
-  title="$file"
-  desc="Download pack"
-  note=""
-  code=""
-  tip_label='$5'   # keep as literal string
+for archive in "$PROD_DIR"/*.zip; do
+  file="$(basename "$archive")"
+  title="${file%.zip}"
+  desc="Verified CRISPY Garage download."
+  note="Download is immediate and provided as-is."
+  tip_label='$5 suggested'
 
   case "$file" in
+    sample-pack.zip)
+      title="CRISPY Garage Sample Pack"
+      desc="The verified starter archive currently stored in this repository."
+      ;;
     Scripts_Duo.zip)
       title="CRISPY Scripts — Phone Cleanup Duo"
-      desc="Termux one-liners for quick relief."
-      code="curl -fsSL $SITE/scripts/termux-clean.sh | bash\ncurl -fsSL $SITE/scripts/storage-pass.sh | bash"
-      tip_label='$5'
+      desc="Termux helpers for storage review and selected cache cleanup."
       ;;
     HUD_Lite.zip)
-      title="Felix HUD Lite — Overlay Pack"
-      desc="Wallpapers + icons to set the vibe."
-      note="No paywall. Tip if you vibe."
-      tip_label='$10'
+      title="FELIX HUD Lite — Overlay Pack"
+      desc="Garage wallpapers and interface assets."
+      tip_label='$10 suggested'
+      ;;
+    Quick_Guides.zip)
+      title="CRISPY Quick Guides"
+      desc="Short how-to guides from the Garage."
+      tip_label='$0+'
       ;;
     Supporter_Bundle.zip)
-    Quick_Guides.zip)
-      title="CRISPY Quick Guides (PWYW)";
-      desc="Short how-tos for fast wins.";
-      note="Pay what you want — $0+";
-      tip_label="$0+";
-      ;;
-
       title="CRISPY Supporter Bundle"
-      desc="HUD Lite + Scripts Duo together in one pack."
-      note="Best way to back the Garage. One click = all the goods."
-      tip_label='$15'
+      desc="The currently packaged Garage downloads in one archive."
+      tip_label='$15 suggested'
       ;;
   esac
 
-  [ $first -eq 1 ] && first=0 || echo "," >> catalog.json
+  item="$(jq -n     --arg title "$title"     --arg desc "$desc"     --arg zip "$file"     --arg tip "$TIP"     --arg tip_label "$tip_label"     --arg note "$note"     '{title:$title,desc:$desc,zip:$zip,tip:$tip,tip_label:$tip_label,note:$note}')"
 
-  jq -n \
-    --arg title "$title" \
-    --arg desc "$desc" \
-    --arg zip "$file" \
-    --arg tip "$TIP" \
-    --arg tip_label "$tip_label" \
-    --arg code "$code" \
-    --arg note "$note" \
-    '{
-       title:$title,
-       desc:$desc,
-       zip:$zip,
-       tip:$tip,
-       tip_label:$tip_label,
-       code: ($code | select(length>0)),
-       note: ($note | select(length>0))
-     }' >> catalog.json
+  jq --argjson item "$item" '. + [$item]' "$tmp" > "$tmp.next"
+  mv "$tmp.next" "$tmp"
 done
-echo "]" >> catalog.json
-echo "[✓] catalog.json updated."
+
+jq empty "$tmp"
+mv "$tmp" catalog.json
+trap - EXIT
+printf '[OK] %s/catalog.json updated with %s entries.\n' "$SCRIPT_DIR" "$(jq length catalog.json)"

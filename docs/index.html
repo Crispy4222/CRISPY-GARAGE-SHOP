@@ -1,34 +1,52 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHOENIX OS</title>
-    <link rel="stylesheet" href="/frontend/styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Verified CRISPY Garage downloads and independent software experiments.">
+  <meta name="theme-color" content="#0b0d10">
+  <title>CRISPY Garage Shop</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="main-container">
-        <header>
-            <h1>PHOENIX OS</h1>
-            <div class="glyph-font">⚡ WAKE/122 ONLINE ⚡</div>
-        </header>
-        <main>
-            <div id="terminal-container">
-                <div id="terminal-output"></div>
-                <input type="text" id="terminal-input" placeholder="CRISPYcommand terminal...">
-            </div>
-            <div id="log-container">
-                <h2>SESSION LOG</h2>
-                <div id="log-output"></div>
-            </div>
-        </main>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">CRISPYCREATIONS // GARAGE</p>
+      <h1>Small tools. Real files. No fake green lights.</h1>
+      <p class="lede">Verified downloads from Logan CRISPY Crislip’s independent Garage builds. Every listing below points to an asset that exists in this repository.</p>
+      <div class="status-row" aria-label="Store status">
+        <span class="status verified">Assets verified</span>
+        <span class="status pending">Automatic paid delivery not connected</span>
+      </div>
     </div>
-    <div id="glyphs-container">
-        <h2>Glyphs — The Line Lives</h2>
-        <p>Marks, oaths, and live design notes.</p>
-        <p><a href="glyphs/" target="_blank" rel="noopener noreferrer">Open Glyphs</a></p>
+  </header>
+
+  <main>
+    <section class="notice" aria-labelledby="delivery-title">
+      <h2 id="delivery-title">How delivery works right now</h2>
+      <p>Downloads shown here are available immediately. Cash App is the current support/payment path. There is no hidden subscription and no claim that payment automatically unlocks a separate product.</p>
+    </section>
+
+    <div id="catalog" class="catalog" aria-live="polite">
+      <section class="product">
+        <h2>Loading verified catalog…</h2>
+        <p class="desc">If this remains visible, open <a href="catalog.json">catalog.json</a> directly.</p>
+      </section>
     </div>
-    <script src="/frontend/script.js"></script>
+
+    <section class="notice" aria-labelledby="runtime-title">
+      <h2 id="runtime-title">FELIX runtime status</h2>
+      <p>The NXT local proxy/runtime has passed local syntax, TypeScript, shell, and Node tests. The bootable FELIX ISO is still unproven until an ISO artifact is built and boot-validated.</p>
+      <p><a href="https://github.com/Crispy4222/CRISPYcreations-Finness.os-NXT">Inspect the NXT source record</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built in the CRISPY Garage. Inspect scripts before running them.</p>
+    <p><a href="https://github.com/Crispy4222/CRISPY-GARAGE-SHOP">Source and change history</a></p>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>

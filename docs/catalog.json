@@ -1,1 +1,18 @@
 [
+  {
+    "title": "CRISPY Garage Sample Pack",
+    "desc": "The verified starter archive currently stored in this repository.",
+    "zip": "sample-pack.zip",
+    "tip": "https://cash.app/$Lcrispy",
+    "tip_label": "$5 suggested",
+    "note": "Pay what you want. The download is immediate and provided as-is."
+  },
+  {
+    "title": "CRISPY Phone Cleanup Duo",
+    "desc": "Two small Termux helpers for reviewing storage use and clearing selected caches.",
+    "tip": "https://cash.app/$Lcrispy",
+    "tip_label": "$5 suggested",
+    "code": "curl -fsSLO https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/termux-clean.sh\ncurl -fsSLO https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/storage-pass.sh\nless termux-clean.sh storage-pass.sh",
+    "note": "Inspect before execution: the helpers remove package caches, cache files older than 7 days, logs older than 14 days, and Android thumbnail-cache files."
+  }
+]

@@ -1,21 +1,85 @@
-*{box-sizing:border-box}body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-margin:0;background:#0c0c0e;color:#e7e7ea;line-height:1.45}
-header{padding:24px 16px;border-bottom:1px solid #24242a;background:#111}
-h1{margin:0 0 6px 0;font-size:24px} .tag{opacity:.75;font-size:14px;margin:0}
-main{padding:16px;display:grid;gap:16px;max-width:760px;margin:0 auto}
-.product{background:#141418;border:1px solid #24242a;border-radius:16px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.35)}
-.product h2{margin:0 0 8px 0}
-.desc{opacity:.9;margin:0 0 8px 0}
-ul{margin:8px 0 12px 20px}
-.code{background:#0c0c10;border:1px solid #262630;border-radius:12px;padding:12px;overflow:auto}
-pre{margin:0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
-.cta{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
-.btn{padding:10px 14px;border-radius:999px;border:1px solid #2a2a35;text-decoration:none;color:#e7e7ea}
-.btn.buy{background:#1a1f2a} .btn.dl{background:#12161e}
-.btn:hover{filter:brightness(1.1)}
-.fine{opacity:.7;font-size:12px;margin-top:6px}
-footer{padding:20px 16px;text-align:center;opacity:.7;font-size:12px}
-.brand{display:flex;align-items:center;gap:12px;margin:8px 0}
-.brand img{height:56px;display:block}
-.brand .tag{font-size:14px;opacity:.8}
-body{background:#111 url("img/legacy.jpg") center/cover fixed no-repeat;color:#eee}
+:root{
+  color-scheme:dark;
+  --bg:#090b0e;
+  --panel:#11151a;
+  --panel-2:#151b22;
+  --line:#26313d;
+  --text:#edf4fa;
+  --muted:#9eabb7;
+  --cyan:#00eaff;
+  --green:#57f287;
+  --amber:#ffcc66;
+  --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% -10%,rgba(0,234,255,.14),transparent 34rem),
+    radial-gradient(circle at 90% 20%,rgba(87,242,135,.08),transparent 28rem),
+    var(--bg);
+  line-height:1.55;
+}
+a{color:var(--cyan)}
+a:hover{color:#8ff7ff}
+.hero{border-bottom:1px solid var(--line);padding:64px 20px 42px}
+.hero-inner,main{width:min(920px,100%);margin:0 auto}
+.eyebrow{
+  margin:0 0 12px;
+  color:var(--cyan);
+  font:700 .78rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.18em;
+}
+h1{max-width:760px;margin:0;font-size:clamp(2.2rem,7vw,4.6rem);line-height:.98;letter-spacing:-.05em}
+.lede{max-width:720px;margin:22px 0 0;color:var(--muted);font-size:1.08rem}
+.status-row,.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.status{
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:7px 11px;
+  font:650 .76rem/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+.status.verified{border-color:rgba(87,242,135,.45);color:var(--green);background:rgba(87,242,135,.08)}
+.status.pending{border-color:rgba(255,204,102,.45);color:var(--amber);background:rgba(255,204,102,.08)}
+main{display:grid;gap:18px;padding:28px 20px 48px}
+.catalog{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px}
+.product,.notice{
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:linear-gradient(160deg,var(--panel-2),var(--panel));
+  box-shadow:var(--shadow);
+  padding:20px;
+}
+.product h2,.notice h2{margin:0 0 10px;font-size:1.16rem}
+.desc,.notice p{color:var(--muted)}
+.code{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#080a0d;padding:12px}
+pre{margin:0;white-space:pre-wrap;word-break:break-word;font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:9px 14px;
+  color:var(--text);
+  text-decoration:none;
+  font-weight:700;
+}
+.btn.buy{border-color:rgba(87,242,135,.45);background:rgba(87,242,135,.1)}
+.btn.dl{border-color:rgba(0,234,255,.45);background:rgba(0,234,255,.1)}
+.btn:hover{filter:brightness(1.18);color:var(--text)}
+.fine{margin:14px 0 0;color:var(--muted);font-size:.82rem}
+footer{border-top:1px solid var(--line);padding:28px 20px 44px;text-align:center;color:var(--muted);font-size:.85rem}
+footer p{margin:5px 0}
+@media (max-width:560px){
+  .hero{padding-top:44px}
+  main{padding-inline:14px}
+  .product,.notice{border-radius:14px}
+}
