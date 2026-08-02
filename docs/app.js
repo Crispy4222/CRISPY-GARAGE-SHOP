@@ -1,25 +1,78 @@
-async function loadCatalog(){
-  const host = location.pathname.replace(/\/index\.html?$/,'');
-  const res = await fetch('catalog.json').catch(()=>null);
-  if (!res || !res.ok) return;
-  const items = await res.json().catch(()=>[]);
+const make = (tag, className, text) => {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text) node.textContent = text;
+  return node;
+};
+
+const safeHref = (value) => {
+  const url = new URL(value, window.location.href);
+  const allowedRemote = new Set(['cash.app', 'github.com', 'crispy4222.github.io']);
+  if (url.origin === window.location.origin || allowedRemote.has(url.hostname)) return url.href;
+  throw new Error('Catalog link host is not allowed');
+};
+
+async function loadCatalog() {
   const grid = document.querySelector('#catalog');
-  if (!grid || !Array.isArray(items)) return;
-  grid.innerHTML = '';
-  for (const it of items){
-    const card = document.createElement('section');
-    card.className = 'product';
-    card.innerHTML = `
-      <h2>${it.title}</h2>
-      <p class="desc">${it.desc||''}</p>
-      ${it.code ? `<div class="code"><pre><code>${it.code}</code></pre></div>`:''}
-      <div class="cta">
-        ${it.tip ? `<a class="btn buy" href="${it.tip}" target="_blank" rel="noopener noreferrer">Tip ${it.tip_label||''}</a>`:''}
-        ${it.zip ? `<a class="btn dl" href="products/${it.zip}" download>Download</a>`:''}
-      </div>
-      ${it.note ? `<p class="fine">${it.note}</p>`:''}
-    `;
-    grid.appendChild(card);
+  if (!grid) return;
+
+  try {
+    const response = await fetch('catalog.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error(`catalog HTTP ${response.status}`);
+    const items = await response.json();
+    if (!Array.isArray(items) || items.length === 0) throw new Error('catalog is empty');
+
+    grid.replaceChildren();
+
+    for (const item of items) {
+      const card = make('section', 'product');
+      card.append(make('h2', '', item.title || 'Untitled Garage item'));
+      card.append(make('p', 'desc', item.desc || ''));
+
+      if (item.code) {
+        const codeBox = make('div', 'code');
+        const pre = make('pre');
+        const code = make('code', '', item.code);
+        pre.append(code);
+        codeBox.append(pre);
+        card.append(codeBox);
+      }
+
+      const actions = make('div', 'cta');
+
+      for (const link of Array.isArray(item.links) ? item.links : []) {
+        const anchor = make('a', 'btn dl', link.label || 'Open file');
+        anchor.href = safeHref(link.href);
+        if (link.download) anchor.setAttribute('download', '');
+        actions.append(anchor);
+      }
+
+      if (item.zip) {
+        const download = make('a', 'btn dl', 'Download archive');
+        download.href = safeHref(`products/${item.zip}`);
+        download.setAttribute('download', '');
+        actions.append(download);
+      }
+
+      if (item.tip) {
+        const support = make('a', 'btn buy', `Support ${item.tip_label || ''}`.trim());
+        support.href = safeHref(item.tip);
+        support.target = '_blank';
+        support.rel = 'noopener noreferrer';
+        actions.append(support);
+      }
+
+      if (actions.childElementCount) card.append(actions);
+      if (item.note) card.append(make('p', 'fine', item.note));
+      grid.append(card);
+    }
+  } catch (error) {
+    grid.replaceChildren();
+    const card = make('section', 'product');
+    card.append(make('h2', '', 'Catalog unavailable'));
+    card.append(make('p', 'desc', error.message));
+    grid.append(card);
   }
 }
+
 window.addEventListener('DOMContentLoaded', loadCatalog);
