@@ -17,6 +17,6 @@
       }
     ],
     "code": "curl -fsSLO https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/termux-clean.sh\ncurl -fsSLO https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/storage-pass.sh\nless termux-clean.sh storage-pass.sh",
-    "note": "The source is available before payment. Read it before execution: these helpers remove package caches, cache files older than 7 days, logs older than 14 days, and Android thumbnail-cache files."
+    "note": "The source is available before payment. Inspect it and back up anything important before execution: these helpers permanently delete selected package caches, cache files older than 7 days, logs older than 14 days, and Android thumbnail-cache files."
   }
 ]
