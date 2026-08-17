@@ -1,9 +1,17 @@
 [
   {
-    "title": "CRISPY Phone Cleanup Duo",
-    "desc": "Two real Termux helpers for storage review and selected cache cleanup.",
+    "title": "CRISPY Phone Cleanup + Tune-Up",
+    "price": "$15",
+    "desc": "Manual Android/Termux cleanup and tune-up: storage review, selected cache/log cleanup guidance, startup/process review, and a before/after summary based on the device in front of us.",
     "tip": "https://cash.app/$Lcrispy",
-    "tip_label": "$5 suggested",
+    "tip_label": "Pay $15 with Cash App",
+    "contact": "mailto:CRISPY@crispy-creations.com?subject=CRISPY%20Phone%20Cleanup%20%2B%20Tune-Up&body=Payment%20name%3A%0ADevice%20model%3A%0AWhat%20is%20slow%20or%20full%3A%0A",
+    "contact_label": "Email intake after payment",
+    "note": "Manual fulfillment: after payment, email the payment name and device model so the job can be scheduled. No rooting, account recovery, security bypass, or guaranteed performance claims are included."
+  },
+  {
+    "title": "CRISPY Phone Cleanup Duo — Free Tools",
+    "desc": "Two real Termux helpers for storage review and selected cache cleanup. Free to inspect before deciding whether you want the manual service.",
     "links": [
       {
         "label": "Inspect termux-clean.sh",
@@ -17,6 +25,6 @@
       }
     ],
     "code": "curl -fsSLO https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/termux-clean.sh\ncurl -fsSLO https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/storage-pass.sh\nless termux-clean.sh storage-pass.sh",
-    "note": "The source is available before payment. Inspect it and back up anything important before execution: these helpers permanently delete selected package caches, cache files older than 7 days, logs older than 14 days, and Android thumbnail-cache files."
+    "note": "Back up anything important before execution: these helpers permanently delete selected package caches, cache files older than 7 days, logs older than 14 days, and Android thumbnail-cache files."
   }
 ]

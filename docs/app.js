@@ -7,6 +7,7 @@ const make = (tag, className, text) => {
 
 const safeHref = (value) => {
   const url = new URL(value, window.location.href);
+  if (url.protocol === 'mailto:') return url.href;
   const allowedRemote = new Set(['cash.app', 'github.com', 'crispy4222.github.io']);
   if (url.origin === window.location.origin || allowedRemote.has(url.hostname)) return url.href;
   throw new Error('Catalog link host is not allowed');
@@ -27,6 +28,7 @@ async function loadCatalog() {
     for (const item of items) {
       const card = make('section', 'product');
       card.append(make('h2', '', item.title || 'Untitled Garage item'));
+      if (item.price) card.append(make('p', 'price', item.price));
       card.append(make('p', 'desc', item.desc || ''));
 
       if (item.code) {
@@ -55,11 +57,17 @@ async function loadCatalog() {
       }
 
       if (item.tip) {
-        const support = make('a', 'btn buy', `Support ${item.tip_label || ''}`.trim());
-        support.href = safeHref(item.tip);
-        support.target = '_blank';
-        support.rel = 'noopener noreferrer';
-        actions.append(support);
+        const pay = make('a', 'btn buy', item.tip_label || 'Pay with Cash App');
+        pay.href = safeHref(item.tip);
+        pay.target = '_blank';
+        pay.rel = 'noopener noreferrer';
+        actions.append(pay);
+      }
+
+      if (item.contact) {
+        const contact = make('a', 'btn contact', item.contact_label || 'Email intake');
+        contact.href = safeHref(item.contact);
+        actions.append(contact);
       }
 
       if (actions.childElementCount) card.append(actions);
