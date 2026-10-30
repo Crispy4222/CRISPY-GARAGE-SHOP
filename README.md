@@ -12,3 +12,9 @@ git remote add origin git@github.com:YOURUSER/CRISPY-GARAGE-SHOP.git
 git push -u origin main
 # Enable Pages → Source: main branch, folder: /docs (Settings → Pages)
 ```
+
+## Support CRISPY Garage
+
+If these inspectable tools or the project help you, you can optionally support ongoing maintenance through Cash App: https://cash.app/$Lcrispy
+
+Support is voluntary; the published tools remain inspectable and available without payment.
