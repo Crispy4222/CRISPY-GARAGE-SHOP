@@ -6,8 +6,14 @@
     "tip": "https://cash.app/$Lcrispy",
     "tip_label": "Pay $15 with Cash App",
     "contact": "mailto:CRISPY@crispy-creations.com?subject=CRISPY%20Phone%20Cleanup%20%2B%20Tune-Up&body=Payment%20name%3A%0ADevice%20model%3A%0AWhat%20is%20slow%20or%20full%3A%0A",
-    "contact_label": "Email intake after payment",
-    "note": "Manual fulfillment: after payment, email the payment name and device model so the job can be scheduled. No rooting, account recovery, security bypass, or guaranteed performance claims are included."
+    "contact_label": "Email intake (Cash App payments)",
+    "note": "Manual fulfillment. Stripe Checkout collects your name, email, Android device model, main issue, and whether you use Termux; CRISPY Garage follows up by email. Cash App payments use the email-intake link. No rooting, account recovery, security bypass, automatic device changes, or guaranteed performance claims are included.",
+    "links": [
+      {
+        "label": "Pay $15 by card (Stripe Checkout)",
+        "href": "https://buy.stripe.com/3cIfZhgoff0g7TQcf54ko01"
+      }
+    ]
   },
   {
     "title": "CRISPY Phone Cleanup Duo — Free Tools",
