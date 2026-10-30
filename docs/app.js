@@ -8,7 +8,7 @@ const make = (tag, className, text) => {
 const safeHref = (value) => {
   const url = new URL(value, window.location.href);
   if (url.protocol === 'mailto:') return url.href;
-  const allowedRemote = new Set(['cash.app', 'github.com', 'crispy4222.github.io']);
+  const allowedRemote = new Set(['cash.app', 'buy.stripe.com', 'github.com', 'crispy4222.github.io']);
   if (url.origin === window.location.origin || allowedRemote.has(url.hostname)) return url.href;
   throw new Error('Catalog link host is not allowed');
 };
@@ -44,7 +44,12 @@ async function loadCatalog() {
 
       for (const link of Array.isArray(item.links) ? item.links : []) {
         const anchor = make('a', 'btn dl', link.label || 'Open file');
-        anchor.href = safeHref(link.href);
+        const href = safeHref(link.href);
+        anchor.href = href;
+        if (new URL(href).origin !== window.location.origin) {
+          anchor.target = '_blank';
+          anchor.rel = 'noopener noreferrer';
+        }
         if (link.download) anchor.setAttribute('download', '');
         actions.append(anchor);
       }
