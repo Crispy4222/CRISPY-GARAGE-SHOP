@@ -30,6 +30,13 @@ case "${1:-}" in
     ;;
 esac
 
+# Fail closed outside a real Termux environment. This prevents a Linux
+# desktop's dpkg database from being misreported as Android package data.
+if [[ -z "${TERMUX_VERSION:-}" && "${PREFIX:-}" != */com.termux/files/usr ]]; then
+  printf 'Unsupported environment: run this diagnostic inside Termux on Android.\n' >&2
+  exit 3
+fi
+
 has() {
   command -v "$1" >/dev/null 2>&1
 }
@@ -40,6 +47,7 @@ section() {
 
 printf 'CRISPY Garage Termux Diagnostic v%s\n' "$VERSION"
 printf 'Mode: READ-ONLY\n'
+printf 'Termux version: %s\n' "${TERMUX_VERSION:-detected from PREFIX}"
 printf 'This report does not change settings, install packages, or inspect file contents.\n'
 printf 'Review the output before sharing; it may include device and storage details.\n'
 
@@ -62,7 +70,11 @@ if has getprop; then
   android_version="$(getprop ro.build.version.release 2>/dev/null || true)"
   if [[ -n "$android_version" ]]; then
     printf 'Android version: %s\n' "$android_version"
+  else
+    printf 'Android version: unavailable from getprop\n'
   fi
+else
+  printf 'Android version: getprop unavailable\n'
 fi
 
 printf 'Home path: %s\n' "${HOME:-not-set}"
