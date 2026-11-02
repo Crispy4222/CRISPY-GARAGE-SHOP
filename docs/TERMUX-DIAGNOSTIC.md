@@ -6,12 +6,14 @@
 
 ## What it reports
 
-- Current date/time and CPU architecture.
-- Android version, when the read-only `getprop` command is available.
+- Termux version and CPU architecture.
+- Android version from the read-only `getprop` command.
 - Filesystem capacity for the Termux home directory.
 - Filesystem capacity for shared Android storage, when that path is mounted and accessible.
-- Number of installed package records.
+- Number of local dpkg package records.
 - Whether common Termux information commands are available.
+
+The script requires a normal Termux environment, its canonical `PREFIX`, a non-empty `TERMUX_VERSION`, and Android's `getprop` command. It refuses to run when it cannot confirm those conditions. Setting environment variables alone is not enough.
 
 ## What it does not do
 
