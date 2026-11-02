@@ -30,16 +30,32 @@ case "${1:-}" in
     ;;
 esac
 
-# Fail closed outside a real Termux environment. This prevents a Linux
-# desktop's dpkg database from being misreported as Android package data.
-if [[ -z "${TERMUX_VERSION:-}" && "${PREFIX:-}" != */com.termux/files/usr ]]; then
+has() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+# Refuse ordinary Linux shells, including ones with only spoofed Termux
+# environment variables. A normal Termux session exports TERMUX_VERSION,
+# uses the canonical Termux PREFIX, and can read Android's getprop.
+case "${PREFIX:-}" in
+  /data/data/com.termux/files/usr|/data/user/0/com.termux/files/usr)
+    ;;
+  *)
+    printf 'Unsupported environment: run this diagnostic inside Termux on Android.\n' >&2
+    exit 3
+    ;;
+esac
+
+if [[ -z "${TERMUX_VERSION:-}" ]] || ! has getprop; then
   printf 'Unsupported environment: run this diagnostic inside Termux on Android.\n' >&2
   exit 3
 fi
 
-has() {
-  command -v "$1" >/dev/null 2>&1
-}
+android_version="$(getprop ro.build.version.release 2>/dev/null || true)"
+if [[ -z "$android_version" ]]; then
+  printf 'Unsupported environment: Android version could not be confirmed with getprop.\n' >&2
+  exit 3
+fi
 
 section() {
   printf '\n== %s ==\n' "$1"
@@ -47,7 +63,7 @@ section() {
 
 printf 'CRISPY Garage Termux Diagnostic v%s\n' "$VERSION"
 printf 'Mode: READ-ONLY\n'
-printf 'Termux version: %s\n' "${TERMUX_VERSION:-detected from PREFIX}"
+printf 'Termux version: %s\n' "$TERMUX_VERSION"
 printf 'This report does not change settings, install packages, or inspect file contents.\n'
 printf 'Review the output before sharing; it may include device and storage details.\n'
 
@@ -65,18 +81,7 @@ if has uname; then
 else
   printf 'unavailable\n'
 fi
-
-if has getprop; then
-  android_version="$(getprop ro.build.version.release 2>/dev/null || true)"
-  if [[ -n "$android_version" ]]; then
-    printf 'Android version: %s\n' "$android_version"
-  else
-    printf 'Android version: unavailable from getprop\n'
-  fi
-else
-  printf 'Android version: getprop unavailable\n'
-fi
-
+printf 'Android version: %s\n' "$android_version"
 printf 'Home path: %s\n' "${HOME:-not-set}"
 
 section "Storage"
