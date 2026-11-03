@@ -32,5 +32,21 @@
     ],
     "code": "curl -fsSLO https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/termux-clean.sh\ncurl -fsSLO https://crispy4222.github.io/CRISPY-GARAGE-SHOP/scripts/storage-pass.sh\nless termux-clean.sh storage-pass.sh",
     "note": "Back up anything important before execution: these helpers permanently delete selected package caches, cache files older than 7 days, logs older than 14 days, and Android thumbnail-cache files."
+  },
+  {
+    "title": "CRISPY Termux Diagnostic — Free",
+    "desc": "A read-only snapshot of Android version, CPU architecture, filesystem capacity, and local Termux package inventory. It does not change files or make network requests.",
+    "links": [
+      {
+        "label": "Download termux-diagnostic.sh",
+        "href": "scripts/termux-diagnostic.sh",
+        "download": true
+      },
+      {
+        "label": "Read usage and privacy notes",
+        "href": "TERMUX-DIAGNOSTIC.md"
+      }
+    ],
+    "note": "Review the report before sharing; it can include device and storage details. This is a basic inventory, not a malware scan, cleaner, repair tool, or performance benchmark."
   }
 ]

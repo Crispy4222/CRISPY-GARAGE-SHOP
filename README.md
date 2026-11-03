@@ -18,11 +18,13 @@ A manual Android/Termux service covering:
 
 ## Free inspectable tools
 
-The repository includes two free Termux helpers:
+The repository includes two free Termux helpers that perform selected deletions:
 - [termux-clean.sh](docs/scripts/termux-clean.sh)
 - [storage-pass.sh](docs/scripts/storage-pass.sh)
 
-Inspect the source before running either script. They perform deletions: `termux-clean.sh` runs `apt-get autoremove -y` and removes selected caches and older logs; `storage-pass.sh` removes files from Android's thumbnail cache. Back up important data first. Do not pipe an unreviewed script directly into a shell.
+It also includes a separate [read-only Termux diagnostic](docs/scripts/termux-diagnostic.sh) that reports basic environment, filesystem-capacity, and package-inventory information without changing files or making network requests. See the [usage and privacy notes](docs/TERMUX-DIAGNOSTIC.md).
+
+Inspect the cleanup source before running either cleanup helper. They perform deletions: `termux-clean.sh` runs `apt-get autoremove -y` and removes selected caches and older logs; `storage-pass.sh` removes files from Android's thumbnail cache. Back up important data first. Do not pipe an unreviewed script directly into a shell.
 
 ## Support
 
