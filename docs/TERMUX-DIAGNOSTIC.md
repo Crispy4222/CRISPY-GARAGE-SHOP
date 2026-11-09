@@ -1,7 +1,9 @@
 # CRISPY Garage Termux Diagnostic
 
-**Version:** 0.1.0  
-**Type:** Read-only inventory  
+**Version:** 0.1.0
+
+**Type:** Read-only inventory
+
 **Platform:** Termux on Android
 
 ## What it reports
