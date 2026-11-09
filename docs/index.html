@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#0b0d10">
   <title>CRISPY Garage Shop</title>
   <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon-192.png" type="image/png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,6 +20,11 @@
         <span class="status verified">Manual service live</span>
         <span class="status pending">Automatic paid delivery is not connected yet</span>
       </div>
+      <div class="cta" aria-label="Shop actions">
+        <a class="btn buy" href="https://buy.stripe.com/3cIfZhgoff0g7TQcf54ko01" target="_blank" rel="noopener noreferrer">Pay $15 by card</a>
+        <a class="btn dl" href="#catalog">Explore free tools</a>
+      </div>
+      <p class="fine">One-time payment. Manual review and follow-up by email. No automatic device changes.</p>
     </div>
   </header>
 
@@ -27,6 +33,7 @@
       <h2 id="delivery-title">How the $15 service works</h2>
       <p><strong>Card:</strong> choose “Pay $15 by card (Stripe Checkout)” on the service card. Stripe collects your name, email, Android device model, main issue, and whether you use Termux; CRISPY Garage follows up by email. <strong>Cash App:</strong> pay through Cash App, then use the email-intake link and include the payment name, device model, and issue. The cleanup/tune-up is handled manually; no automatic device changes or hidden subscription are being claimed.</p>
       <p>Anything device-specific gets reviewed before destructive steps. Back up important data first.</p>
+      <p><strong>Privacy:</strong> the checkout asks for your name, email, device model, main issue, and Termux use. Stripe handles card payment. Do not put passwords, recovery codes, or private file contents in the issue description. The free diagnostic runs locally and does not upload its report; review and redact output before sharing it.</p>
     </section>
 
     <div id="catalog" class="catalog" aria-live="polite">
@@ -35,12 +42,6 @@
         <p class="desc">If this remains visible, open <a href="catalog.json">catalog.json</a> directly.</p>
       </section>
     </div>
-
-    <section class="notice" aria-labelledby="runtime-title">
-      <h2 id="runtime-title">FELIX runtime status</h2>
-      <p>The NXT local proxy/runtime has passed local syntax, TypeScript, shell, and Node tests. The bootable FELIX ISO is still unproven until an ISO artifact is built and boot-validated.</p>
-      <p><a href="https://github.com/Crispy4222/CRISPYcreations-Finness.os-NXT">Inspect the NXT source record</a></p>
-    </section>
   </main>
 
   <footer>
